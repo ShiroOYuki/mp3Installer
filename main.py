@@ -2,6 +2,7 @@ import eel
 import Static.module as module
 import tkinter as tk
 from tkinter import filedialog
+import asyncio
 
 
 @eel.expose
@@ -16,7 +17,13 @@ def getFolderPath():
 @eel.expose
 def download(url,path):
     installer = module.installer(path)
+    installedSize = 0
     installer.downloader(url)
+   
+
+    
+
+
 
 
 eel.init("GUI")

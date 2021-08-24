@@ -1,6 +1,7 @@
 from pytube import YouTube,Playlist
 import json
 import re
+import eel
 
 class installer:
     def __init__(self,downloadPath=None):
@@ -9,10 +10,17 @@ class installer:
         self.downloadPath = jdata["downloadPath"]
         if downloadPath:
             self.downloadPath = downloadPath
+        self.totalSize = 100
+        self.installedSize = 0
+        
 
     def progress(self,chunk,chunksize,bytes_remaining):
         contentSize = self.video.filesize
         installedSize = contentSize - bytes_remaining
+        totalSize = 100
+        self.installedSize = int(round(installedSize/contentSize*100))
+        eel.changeProgressBar(self.installedSize)
+
 
     def complete(self,stream,filePath):
         pass

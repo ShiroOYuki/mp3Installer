@@ -12,4 +12,11 @@ async function callDownload(){
 function reset(){
     document.getElementById("path").value = "";
     document.getElementById("url").value = "";
+    changeProgressBar(100);
+}
+
+eel.expose(changeProgressBar);
+
+function changeProgressBar(installedSize){
+    $(".progress-bar").css("width", installedSize + "%").text(installedSize + " %");
 }
