@@ -17,16 +17,19 @@
         <title>Setting</title>
     </head>
 <body class="d-flex h-100 text-white bg-dark" onload="callGetDefaultPath()">
-    <div class="container text-center">
+    <div class="container">
         <div style="margin-top:30%"></div>
-        <div class="input-group mb-3">
-            <button class="btn btn-outline-light" id="button-addon1" onclick="callGetFolderPath()">Choose the Folder</button>
-            <input type="text" id="path" class="form-control" readonly="true">
-        </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary me-md-2" type="button" onclick="callSavePath()">Save</button>
-            <button class="btn btn-outline-danger" type="button" onclick="closeWindow()">Cancel</button>
-          </div>
+        <h3>Default Folder Path</h3>
+        <figure class="text-center">
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-light" id="button-addon1" onclick="callGetFolderPath()">Choose the Folder</button>
+                <input type="text" id="path" class="form-control" readonly="true">
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="button" onclick="callSavePath()">Save</button>
+                <button class="btn btn-outline-danger" type="button" onclick="closeWindow()">Cancel</button>
+            </div>
+        </figure>
     </div>
 </body>
 </html>
