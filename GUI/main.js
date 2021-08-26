@@ -3,6 +3,11 @@ async function callGetFolderPath(){
     document.getElementById("path").value = path;
 }
 
+async function callGetDefaultPath(){
+    path = await eel.getDefaultPath()();
+    $("#path").val(path);
+}
+
 async function callDownload(){
     resetProgressBar();
     url = document.getElementById("url").value
@@ -28,4 +33,8 @@ async function callOpenOtherPage(){
 
 function resetProgressBar(){
     $(".progress-bar").css("width", 0 + "%").text(0 + " %");
+}
+
+window.onload = function loadWindow(){
+    callGetDefaultPath();
 }

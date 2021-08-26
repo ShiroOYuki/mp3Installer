@@ -8,10 +8,12 @@ import json
 def getFolderPath():
     root = tk.Tk()
     root.withdraw()
-    file_path = filedialog.askdirectory()
+    path = filedialog.askdirectory()
+    print(path)
     root.destroy()
-    print(file_path)
-    return file_path
+    if not path:
+        path = getDefaultPath()
+    return path
 
 @eel.expose
 def download(url,path):
@@ -28,7 +30,6 @@ def getDefaultPath():
     with open("Static/setting.json","r",encoding="utf8") as jfile:
         jdata = json.load(jfile)
     path = jdata["downloadPath"]
-    print(path)
     return path
 
 @eel.expose
