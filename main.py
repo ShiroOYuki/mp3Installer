@@ -2,8 +2,7 @@ import eel
 import Static.module as module
 import tkinter as tk
 from tkinter import filedialog
-import asyncio
-
+import json
 
 @eel.expose
 def getFolderPath():
@@ -24,7 +23,22 @@ def download(url,path):
 def openOtherPage():
     eel.show("setting.html")
 
+@eel.expose
+def getDefaultPath():
+    with open("Static/setting.json","r",encoding="utf8") as jfile:
+        jdata = json.load(jfile)
+    path = jdata["downloadPath"]
+    print(path)
+    return path
 
+@eel.expose
+def savePath(path):
+    with open("Static/setting.json","r",encoding="utf8") as jfile:
+        jdata = json.load(jfile)
+    jdata["downloadPath"] = path
+
+    with open("Static/setting.json","w",encoding="utf8") as jfile:
+        json.dump(jdata,jfile,indent=4)
 
 
 eel.init("GUI")
