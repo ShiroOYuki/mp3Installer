@@ -20,8 +20,9 @@ def download(url,path):
     installedSize = 0
     installer.downloader(url)
    
-
-    
+@eel.expose
+def openOtherPage():
+    eel.show("setting.html")
 
 
 

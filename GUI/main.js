@@ -4,6 +4,7 @@ async function callGetFolderPath(){
 }
 
 async function callDownload(){
+    resetProgressBar();
     url = document.getElementById("url").value
     path = document.getElementById("path").value;
     await eel.download(url,path)();
@@ -12,11 +13,19 @@ async function callDownload(){
 function reset(){
     document.getElementById("path").value = "";
     document.getElementById("url").value = "";
-    changeProgressBar(100);
+    resetProgressBar();
 }
 
 eel.expose(changeProgressBar);
 
 function changeProgressBar(installedSize){
     $(".progress-bar").css("width", installedSize + "%").text(installedSize + " %");
+}
+
+async function callOpenOtherPage(){
+    await eel.openOtherPage()();
+}
+
+function resetProgressBar(){
+    $(".progress-bar").css("width", 0 + "%").text(0 + " %");
 }
