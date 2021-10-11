@@ -5,8 +5,7 @@ from tkinter import filedialog
 import json
 import sys
 sys.coinit_flags = 2  # COINIT_APARTMENTTHREADED
-import pywinauto
-import pyglet
+
 
 @eel.expose
 def getFolderPath():
@@ -46,10 +45,9 @@ def savePath(path):
     with open("Static/setting.json","r",encoding="utf8") as jfile:
         jdata = json.load(jfile)
     jdata["downloadPath"] = path
-
     with open("Static/setting.json","w",encoding="utf8") as jfile:
         json.dump(jdata,jfile,indent=4)
 
 
 eel.init("GUI")
-eel.start("main.html",port=8081)
+eel.start("main.html",port=8082)

@@ -20,10 +20,11 @@ class installer:
         totalSize = 100
         self.installedSize = int(round(installedSize/contentSize*100))
         eel.changeProgressBar(self.installedSize)
+        
 
 
     def complete(self,stream,filePath):
-        pass
+        eel.downloadComplete()
         
     def IsList(self,url):
             return "&list=" in url
