@@ -1,3 +1,4 @@
+import socket
 import eel
 import Static.module as module
 import tkinter as tk
@@ -48,6 +49,24 @@ def savePath(path):
     with open("Static/setting.json","w",encoding="utf8") as jfile:
         json.dump(jdata,jfile,indent=4)
 
+def checkPortInUse(port,host='127.0.0.1'):
+    s = None
+    try:
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.settimeout(1)
+        s.connect((host,int(port)))
+        if s:
+            s.close()
+        return True
+    except socket.error:
+        if s:
+            s.close()
+        return False
+        
 
 eel.init("GUI")
-eel.start("main.html",port=8082)
+port=8080
+while checkPortInUse(port):
+    port+=1
+print(f"Port:{port}")
+eel.start("main.html",port=port)
