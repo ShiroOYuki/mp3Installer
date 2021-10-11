@@ -30,8 +30,10 @@ class installer:
 
     def downloader(self,url):
         if not self.IsList(url):
+            print("video")
             self.getMp3(url)
         else:
+            print("list")
             self.getMp3List(url)
 
     def getMp3(self,url):

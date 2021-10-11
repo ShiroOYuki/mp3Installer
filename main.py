@@ -17,6 +17,7 @@ def getFolderPath():
 
 @eel.expose
 def download(url,path):
+    print(url)
     installer = module.installer(path)
     installedSize = 0
     installer.downloader(url)

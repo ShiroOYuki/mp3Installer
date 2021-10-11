@@ -24,7 +24,7 @@ class installer:
         print(f"\n\nComplete!\n\n{'―'*80}")
         
     def IsList(self,url):
-        return "&list=" in self.url
+        return "&list=" in url
 
     def downloader(self):
         if not self.IsList(self.url):
@@ -32,11 +32,11 @@ class installer:
         else:
             self.getMp3List()
 
-    def getMp3(self):
+    def getMp3(self): 
         print(f"{'―'*80}\n\n{self.yt.title}\n")
         self.video = self.yt.streams.filter(only_audio=True).first()
         self.video.download(output_path=self.downloadPath,filename="{}.mp3".format(re.sub('[\/:*?"<>|]','-',self.yt.title)))
-        self.newURL()
+        self.newURL()   
 
     def getMp3List(self):
         playlist = Playlist(self.url)
