@@ -39,7 +39,10 @@ class installer:
 
     def getMp3(self,url):
         yt = YouTube(url,on_progress_callback=self.progress,on_complete_callback=self.complete)
-        self.video = yt.streams.filter(only_audio=True).first()
+        #self.video = yt.streams.filter(mime_type='audio/webm')[0] # webm 50kbps
+        #self.video = yt.streams.filter(mime_type='audio/webm')[1] # webm 70kbps
+        self.video = yt.streams.filter(mime_type='audio/webm')[2] # webm 160kbps
+        #self.video = yt.streams.filter(only_audio=True).first() # mp4 聲音檔
         self.video.download(output_path=self.downloadPath,filename="{}.mp3".format(re.sub('[\/:*?"<>|]','-',yt.title)))
 
     def getMp3List(self,url):
