@@ -33,6 +33,13 @@ async function callOpenOtherPage(){
     await eel.openOtherPage()();
 }
 
+async function callGetKbps(){
+    console.log("callGetKbps");
+    kbps = await eel.getKbps()();
+    console.log(kbps);
+    $("input[type=radio]")[kbps].checked = true;
+}
+
 eel.expose(changeProgressBar);
 eel.expose(downloadComplete);
 
@@ -69,7 +76,7 @@ function downloadComplete(){
     var timer = setTimeout(downloadCompleteProgress,3000);
 }
 
-
 window.onload = function loadWindow(){
     callGetDefaultPath();
+    callGetKbps();
 }

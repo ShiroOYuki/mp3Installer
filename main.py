@@ -1,20 +1,20 @@
 import socket
 import eel
 import Static.module as module
-import tkinter as tk
-from tkinter import filedialog
-import json
 import sys
 sys.coinit_flags = 2  # COINIT_APARTMENTTHREADED
+import tkinter as tk
+import tkinter.filedialog as tf
+import json
 
 
 @eel.expose
 def getFolderPath():
     print("getFolderPath")
     root = tk.Tk()
-    root.withdraw()
+    # root.withdraw()
     # https://github.com/pywinauto/pywinauto/issues/517
-    path = filedialog.askdirectory()# 很常死在這行
+    path = tf.askdirectory()# 很常死在這行
     print(path)
     root.destroy()
     return path
@@ -48,6 +48,23 @@ def savePath(path):
     jdata["downloadPath"] = path
     with open("Static/setting.json","w",encoding="utf8") as jfile:
         json.dump(jdata,jfile,indent=4)
+
+@eel.expose
+def changeKbps(kbps):
+    print("changeKbps")
+    with open("Static/setting.json","r",encoding='utf8') as jfile:
+        jdata = json.load(jfile)
+    jdata["kbps"]=int(kbps)
+    with open("Static/setting.json","w",encoding="utf8") as jfile:
+        json.dump(jdata,jfile,indent=4)
+        
+@eel.expose
+def getKbps():
+    print("getKbps")
+    with open("Static/setting.json","r",encoding='utf8') as jfile:
+        jdata = json.load(jfile)
+    return jdata["kbps"]
+
 
 def checkPortInUse(port,host='127.0.0.1'):
     s = None

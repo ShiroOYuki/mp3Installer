@@ -10,6 +10,18 @@ async function callSavePath(){
     saveAlert();
 }
 
+async function callChangeKbps(kbps){
+    console.log("callChangeKbps");
+    await eel.changeKbps(kbps)();
+}
+
+function saveSetting(){
+    callSavePath();
+    kbps = $('input[name=btnradio]:checked').val();
+    console.log(kbps);
+    callChangeKbps(kbps);
+}
+
 function closeWindow(){
     window.close();
 }
@@ -20,8 +32,4 @@ function saveAlert(){
 
 function alertHidden(){
     $("#successSaveAlert").fadeOut()
-}
-
-window.onload = function loadWindow(){
-    callGetDefaultPath();
 }
