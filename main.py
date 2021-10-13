@@ -12,12 +12,14 @@ import json
 def getFolderPath():
     print("getFolderPath")
     root = tk.Tk()
-    root.overrideredirect(True)
-    root.geometry("0x0")
-    # root.withdraw()
-    #root.deiconify()
-    # https://github.com/pywinauto/pywinauto/issues/517
-    path = tf.askdirectory()# 很常死在這行
+
+    # 隱藏窗口
+    # root.withdraw() 會導致下面的 directory dialog 出不來
+    # 改用下面兩行代替
+    root.overrideredirect(True) # 隱藏標題欄
+    root.geometry("0x0") # 視窗大小為 0*0
+    
+    path = tf.askdirectory()
     print(path)
     root.destroy()
     return path
