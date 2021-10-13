@@ -12,7 +12,10 @@ import json
 def getFolderPath():
     print("getFolderPath")
     root = tk.Tk()
+    root.overrideredirect(True)
+    root.geometry("0x0")
     # root.withdraw()
+    #root.deiconify()
     # https://github.com/pywinauto/pywinauto/issues/517
     path = tf.askdirectory()# 很常死在這行
     print(path)
