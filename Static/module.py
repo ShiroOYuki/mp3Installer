@@ -2,16 +2,21 @@ from pytube import YouTube,Playlist
 import json
 import re
 import eel
+import os
 
 class installer:
     def __init__(self,downloadPath=None):
-        with open("./Static/setting.json","r",encoding="utf8") as f:
+        self.PATH = os.getcwd()
+        self.SETTING_PATH = os.path.join(self.PATH,"Static/setting.json")
+        
+        with open(self.SETTING_PATH,"r",encoding="utf8") as f:
             jdata = json.load(f)
         self.downloadPath = jdata["downloadPath"]
         if downloadPath:
             self.downloadPath = downloadPath
         self.totalSize = 100
         self.installedSize = 0
+        print(self.SETTING_PATH)
         
 
     def progress(self,chunk,chunksize,bytes_remaining):
@@ -39,7 +44,7 @@ class installer:
 
     def getMp3(self,url):
         yt = YouTube(url,on_progress_callback=self.progress,on_complete_callback=self.complete)
-        with open("./Static/setting.json","r",encoding='utf8') as jfile:
+        with open(self.SETTING_PATH,"r",encoding='utf8') as jfile:
             jdata = json.load(jfile)
         kbps = jdata["kbps"]
         if kbps==0:

@@ -6,7 +6,23 @@ sys.coinit_flags = 2  # COINIT_APARTMENTTHREADED
 import tkinter as tk
 import tkinter.filedialog as tf
 import json
+import os
 
+PATH = os.getcwd()
+SETTING_PATH = os.path.join(PATH,"Static/setting.json")
+GUI = os.path.join(PATH,"GUI")
+
+def readSetting(key:str):
+    with open(SETTING_PATH,"r",encoding='utf8') as jfile:
+        jdata = json.load(jfile)
+    return jdata[key]
+
+def writeSetting(key:str,data):
+    with open(SETTING_PATH,"r",encoding='utf8') as jfile:
+        jdata = json.load(jfile)
+    jdata[key] = data
+    with open(SETTING_PATH,"w",encoding='utf8') as jfile:
+        json.dump(jdata,jfile,indent=4)
 
 @eel.expose
 def getFolderPath():
@@ -20,8 +36,8 @@ def getFolderPath():
     root.geometry("0x0") # 視窗大小為 0*0
     root.attributes("-topmost", True)
     path = tf.askdirectory()
-    print(path)
     root.destroy()
+    print(path)
     return path
 
 @eel.expose
@@ -40,35 +56,36 @@ def openOtherPage():
 @eel.expose
 def getDefaultPath():
     print("getDefaultPath")
-    with open("Static/setting.json","r",encoding="utf8") as jfile:
-        jdata = json.load(jfile)
-    path = jdata["downloadPath"]
-    return path
+    return readSetting("downloadPath")
 
 @eel.expose
 def savePath(path):
     print("savePath")
-    with open("Static/setting.json","r",encoding="utf8") as jfile:
-        jdata = json.load(jfile)
-    jdata["downloadPath"] = path
-    with open("Static/setting.json","w",encoding="utf8") as jfile:
-        json.dump(jdata,jfile,indent=4)
+    writeSetting("downloadPath",path)
 
 @eel.expose
 def changeKbps(kbps):
     print("changeKbps")
-    with open("Static/setting.json","r",encoding='utf8') as jfile:
-        jdata = json.load(jfile)
-    jdata["kbps"]=int(kbps)
-    with open("Static/setting.json","w",encoding="utf8") as jfile:
-        json.dump(jdata,jfile,indent=4)
+    writeSetting("kbps",int(kbps))
         
 @eel.expose
 def getKbps():
     print("getKbps")
-    with open("Static/setting.json","r",encoding='utf8') as jfile:
-        jdata = json.load(jfile)
-    return jdata["kbps"]
+    return readSetting("kbps")
+
+@eel.expose
+def saveIsAutosave(autosave):
+    print("saveIsAutosave")
+    writeSetting("autosave",autosave)
+
+@eel.expose
+def IsAutosave():
+    print("IsAutosave")
+    return readSetting("autosave")
+
+@eel.expose
+def jsPrint(index):
+    print(index)
 
 
 def checkPortInUse(port,host='127.0.0.1'):
@@ -86,7 +103,7 @@ def checkPortInUse(port,host='127.0.0.1'):
         return False
         
 
-eel.init("GUI")
+eel.init(GUI)
 port=8080
 while checkPortInUse(port):
     port+=1

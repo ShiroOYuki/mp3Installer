@@ -76,7 +76,60 @@ function downloadComplete(){
     var timer = setTimeout(downloadCompleteProgress,3000);
 }
 
+async function callIsAutosave(){
+    autosave = await eel.IsAutosave()();
+    return autosave;
+}
+
+async function printOnCmd(index){
+    await eel.jsPrint(index)();
+}
+
+function saveSetting(){
+    callSaveIsAutosave();
+    callSavePath();
+    kbps = $('input[name=btnradio]:checked').val();
+    if(kbps !== "" && kbps !== null){
+        console.log(kbps);
+        printOnCmd(kbps)
+        callChangeKbps(kbps);
+    }
+}
+
+async function callSavePath(){
+    path = $("#path").val();
+    if(path !== "" && path !== null){
+        printOnCmd(path)
+        await eel.savePath(path)();
+    }
+}
+
+async function callChangeKbps(kbps){
+    console.log("callChangeKbps");
+    await eel.changeKbps(kbps)();
+}
+
+async function callSaveIsAutosave(){
+    console.log("callSaveIsAutosave");
+    autosave = $("#Autosave").is(":checked")
+    await eel.saveIsAutosave(autosave)();
+}
+
+async function defaultAutosave(){
+    autosave = await eel.IsAutosave()();
+    $("#Autosave").prop('checked', autosave);
+}
+
 window.onload = function loadWindow(){
     callGetDefaultPath();
     callGetKbps();
+    defaultAutosave();
 }
+
+window.onbeforeunload = function closeWindow() {
+    printOnCmd("Close "+document.title);
+    printOnCmd($("#Autosave").is(":checked"))
+    if($("#Autosave").is(":checked") && document.title === "Setting"){
+        saveSetting();
+    }
+};

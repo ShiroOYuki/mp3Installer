@@ -15,11 +15,19 @@ async function callChangeKbps(kbps){
     await eel.changeKbps(kbps)();
 }
 
+async function callSaveIsAutosave(autosave){
+    console.log("callSaveIsAutosave");
+    await eel.saveIsAutosave(autosave)();
+}
+
 function saveSetting(){
     callSavePath();
     kbps = $('input[name=btnradio]:checked').val();
     console.log(kbps);
     callChangeKbps(kbps);
+    console.log("checked");
+    autosave = $("#Autosave").is(":checked");
+    callSaveIsAutosave(autosave);
 }
 
 function closeWindow(){
@@ -33,3 +41,6 @@ function saveAlert(){
 function alertHidden(){
     $("#successSaveAlert").fadeOut()
 }
+
+
+

@@ -1,4 +1,5 @@
 {
     "downloadPath": "E:/Music",
-    "kbps": 3
+    "kbps": 3,
+    "autosave": false
 }
