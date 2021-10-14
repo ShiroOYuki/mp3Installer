@@ -18,7 +18,7 @@ def getFolderPath():
     # 改用下面兩行代替
     root.overrideredirect(True) # 隱藏標題欄
     root.geometry("0x0") # 視窗大小為 0*0
-    
+    root.attributes("-topmost", True)
     path = tf.askdirectory()
     print(path)
     root.destroy()
