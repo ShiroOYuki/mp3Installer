@@ -14,6 +14,7 @@ def getFolderPath():
     root = tk.Tk()
     root.overrideredirect(True)
     root.geometry("0x0")
+    root.attributes("-topmost", True)# 提升視窗至頂層
     # root.withdraw()
     #root.deiconify()
     # https://github.com/pywinauto/pywinauto/issues/517
