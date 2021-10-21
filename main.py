@@ -25,8 +25,8 @@ def writeSetting(key:str,data):
         json.dump(jdata,jfile,indent=4)
 
 @eel.expose
-def getFolderPath():
-    print("getFolderPath")
+def askFolderDialog():
+    print("askFolderDialog")
     root = tk.Tk()
 
     # 隱藏窗口
@@ -41,46 +41,46 @@ def getFolderPath():
     return path
 
 @eel.expose
-def download(url,path):
-    print("download")
+def downloadMp3(url,path):
+    print("downloadMp3")
     print(url)
     installer = module.installer(path)
     installedSize = 0
     installer.downloader(url)
    
 @eel.expose
-def openOtherPage():
-    print("openOtherPage")
+def newPage():
+    print("newPage")
     eel.show("setting.html")
 
 @eel.expose
-def getDefaultPath():
-    print("getDefaultPath")
+def askDefaultPath():
+    print("askDefaultPath")
     return readSetting("downloadPath")
 
 @eel.expose
-def savePath(path):
-    print("savePath")
+def setDefaultPath(path):
+    print("setDefaultPath")
     writeSetting("downloadPath",path)
 
 @eel.expose
-def changeKbps(kbps):
-    print("changeKbps")
+def setDefaultKbps(kbps):
+    print("setDefaultKbps")
     writeSetting("kbps",int(kbps))
         
 @eel.expose
-def getKbps():
-    print("getKbps")
+def askKbps():
+    print("askKbps")
     return readSetting("kbps")
 
 @eel.expose
-def saveIsAutosave(autosave):
-    print("saveIsAutosave")
+def setAutosave(autosave):
+    print("setAutosave")
     writeSetting("autosave",autosave)
 
 @eel.expose
-def IsAutosave():
-    print("IsAutosave")
+def isAutosave():
+    print("isAutosave")
     return readSetting("autosave")
 
 @eel.expose

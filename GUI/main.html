@@ -29,12 +29,12 @@
         </div>
         
         <div class="input-group mb-3">
-            <button class="btn btn-outline-light" id="button-addon1" onclick="callGetFolderPath()">Choose the Folder</button>
+            <button class="btn btn-outline-light" id="button-addon1" onclick="_askFolderDialog()">Choose the Folder</button>
             <input type="text" id="path" class="form-control" readonly="true">
         </div>
         
         <div class="mx-auto row">
-            <input class="btn btn-primary col" style="margin-left:5%;margin-right:2.5%" type="submit" value="Submit" onclick="callDownload()">
+            <input class="btn btn-primary col" style="margin-left:5%;margin-right:2.5%" type="submit" value="Submit" onclick="_downloadMp3()">
             <input class="btn btn-danger col" style="margin-left:2.5%;margin-right:5%" type="reset" value="Reset" onclick="reset()">
         </div>
 
@@ -43,7 +43,7 @@
         </div>
 
         <div class="mx-auto row" style="margin-top:2.5%">
-            <input class="btn btn-primary col" style="margin-left:5%;margin-right:2.5%" type="submit" value="Setting" onclick="callOpenOtherPage()">
+            <input class="btn btn-primary col" style="margin-left:5%;margin-right:2.5%" type="submit" value="Setting" onclick="_newPage()">
         </div>
     </div>
 </body>

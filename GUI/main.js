@@ -1,83 +1,40 @@
-async function callGetFolderPath(){
-    console.log("callGetFolderPath");
-    path = await eel.getFolderPath()();
+async function _askFolderDialog(){
+    path = await eel.askFolderDialog()();
     if(path !== ""){
         document.getElementById("path").value = path;
     }
 }
 
-async function callGetDefaultPath(){
-    console.log("callGetDefaultPath");
-    path = await eel.getDefaultPath()();
+async function _askDefaultPath(){
+    path = await eel.askDefaultPath()();
     $("#path").val(path);
 }
 
-async function callDownload(){
-    console.log("callDownload");
+async function _downloadMp3(){
     resetProgressBar();
     changeProgressBar(1);
     url = document.getElementById("url").value
     path = document.getElementById("path").value;
-    await eel.download(url,path)();
+    await eel.downloadMp3(url,path)();
+}
+
+async function _askKbps(){
+    kbps = await eel.askKbps()();
+    $("input[type=radio]")[kbps].checked = true;
+}
+
+async function _newPage(){
+    await eel.newPage()();
 }
 
 async function reset(){
-    console.log("reset");
-    document.getElementById("path").value = await eel.getDefaultPath()();
+    document.getElementById("path").value = await eel.askDefaultPath()();
     document.getElementById("url").value = "";
     resetProgressBar();
 }
 
-async function callOpenOtherPage(){
-    console.log("callOpenOtherPage");
-    await eel.openOtherPage()();
-}
-
-async function callGetKbps(){
-    console.log("callGetKbps");
-    kbps = await eel.getKbps()();
-    console.log(kbps);
-    $("input[type=radio]")[kbps].checked = true;
-}
-
-eel.expose(changeProgressBar);
-eel.expose(downloadComplete);
-
-function changeProgressBar(installedSize){
-    console.log("changeProgressBar");
-    $(".progress-bar").css("width", installedSize + "%").text(installedSize + " %");
-}
-
-function resetProgressBar(){
-    console.log("resetProgressBar");
-    $(".progress-bar").css("width", 0 + "%").text(0 + " %");
-}
-
-function alertHidden(){
-    console.log("alertHidden");
-    $("#successSaveAlert").fadeOut()
-}
-
-function showAlert(){
-    console.log("showAlert");
-    $("#successSaveAlert").fadeIn()
-}
-
-function downloadCompleteProgress(){
-    console.log("downloadCompleteProgress");
-    resetProgressBar();
-    alertHidden();
-}
-
-function downloadComplete(){
-    console.log("downloadComplete");
-    $(".progress-bar").text("Complete!");
-    showAlert();
-    var timer = setTimeout(downloadCompleteProgress,3000);
-}
-
-async function callIsAutosave(){
-    autosave = await eel.IsAutosave()();
+async function _isAutosave(){
+    autosave = await eel.isAutosave()();
     return autosave;
 }
 
@@ -85,50 +42,91 @@ async function printOnCmd(index){
     await eel.jsPrint(index)();
 }
 
-function saveSetting(){
-    callSaveIsAutosave();
-    callSavePath();
-    kbps = $('input[name=btnradio]:checked').val();
-    if(kbps !== "" && kbps !== null){
-        console.log(kbps);
-        printOnCmd(kbps)
-        callChangeKbps(kbps);
-    }
-}
-
-async function callSavePath(){
+async function _setDefaultPath(){
     path = $("#path").val();
     if(path !== "" && path !== null){
-        printOnCmd(path)
-        await eel.savePath(path)();
+        await eel.setDefaultPath(path)();
+        _askDefaultPath();
+        saveAlert();
     }
 }
 
-async function callChangeKbps(kbps){
-    console.log("callChangeKbps");
-    await eel.changeKbps(kbps)();
+async function _setDefaultKbps(kbps){
+    await eel.setDefaultKbps(kbps)();
 }
 
-async function callSaveIsAutosave(){
-    console.log("callSaveIsAutosave");
+async function _setAutosave(){
     autosave = $("#Autosave").is(":checked")
-    await eel.saveIsAutosave(autosave)();
+    await eel.setAutosave(autosave)();
 }
 
-async function defaultAutosave(){
-    autosave = await eel.IsAutosave()();
+async function _isAutosave(){
+    autosave = await eel.isAutosave()();
     $("#Autosave").prop('checked', autosave);
 }
 
+// ----------------------------------------------
+
+function changeProgressBar(installedSize){
+    $(".progress-bar").css("width", installedSize + "%").text(installedSize + " %");
+}
+
+function resetProgressBar(){
+    $(".progress-bar").css("width", 0 + "%").text(0 + " %");
+}
+
+function alertHidden(){
+    $("#successSaveAlert").fadeOut()
+}
+
+function showAlert(){
+    $("#successSaveAlert").fadeIn()
+}
+
+function downloadCompleteProgress(){
+    resetProgressBar();
+    alertHidden();
+}
+
+function downloadComplete(){
+    $(".progress-bar").text("Complete!");
+    showAlert();
+    var timer = setTimeout(downloadCompleteProgress,3000);
+}
+
+function saveSetting(){
+    _setAutosave();
+    _setDefaultPath();
+    kbps = $('input[name=btnradio]:checked').val();
+    if(kbps !== "" && kbps !== null){
+        _setDefaultKbps(kbps);
+    }
+    autosave = $("#Autosave").is(":checked");
+    _setAutosave(autosave);
+}
+
+function saveAlert(){
+    $("#successSaveAlert").fadeIn()
+}
+
+function alertHidden(){
+    $("#successSaveAlert").fadeOut()
+}
+
+function closeWindow(){
+    window.close();
+}
+
+eel.expose(changeProgressBar);
+eel.expose(downloadComplete);
+
 window.onload = function loadWindow(){
-    callGetDefaultPath();
-    callGetKbps();
-    defaultAutosave();
+    _askDefaultPath();
+    _askKbps();
+    _isAutosave();
 }
 
 window.onbeforeunload = function closeWindow() {
-    printOnCmd("Close "+document.title);
-    printOnCmd($("#Autosave").is(":checked"))
     if($("#Autosave").is(":checked") && document.title === "Setting"){
         saveSetting();
     }
