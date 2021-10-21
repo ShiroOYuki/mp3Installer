@@ -1,3 +1,4 @@
 tkinter
 pytube
 eel
+socket
